@@ -6,7 +6,7 @@ use Benlumia007\Backdrop\App;
 function asset( $path ) {
 
 	// Get the Laravel Mix manifest.
-	$manifest = App::resolve( 'backdrop/mix' );
+	$manifest = App::resolve( 'backdrop/mix/manifest' );
 
 	// Make sure to trim any slashes from the front of the path.
 	$path = '/' . ltrim( $path, '/' );
