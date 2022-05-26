@@ -1,0 +1,28 @@
+{
+    "name": "benlumia007/backdrop-mix-manifest",
+    "description": "A core that helps you build amazing themes",
+    "keywords": [
+        "wordpress"
+    ],
+    "homepage": "https://github.com/benlumia007/backdrop-mix-manifest",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Benjamin Lu",
+            "email": "benlumia007@gmail.com",
+            "homepage": "https://benjlu.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+          "Benlumia007\\Backdrop\\Mix\\Manifest\\": "src/"
+		},
+        "files": [
+            "src/functions-helpers.php"
+        ]
+    },
+    "require": {
+        "php": ">=7.4.3"
+    }
+}
