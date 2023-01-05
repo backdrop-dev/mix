@@ -1,16 +1,12 @@
 <?php
 /**
- * App service provider.
+ * Mix Manifest provider.
  *
- * Service providers are essentially the bootstrapping code for your theme.
- * They allow you to add bindings to the container on registration and boot them
- * once everything has been registered.
- *
- * @package   Exhale
- * @author    Justin Tadlock <justintadlock@gmail.com>
- * @copyright 2019 Justin Tadlock
- * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0-or-later
- * @link      https://themehybrid.com/themes/exhale
+ * @package   Backdrop
+ * @author    Benjamin Lu <benlumia007@gmail.com>
+ * @copyright 2019-2023. Benjamin Lu
+ * @license   https://www.gnu.org/licenses/gpl-2.0.html
+ * @link      https://github.com/benlumia007/backdrop-mix-manifest
  */
 
 namespace Backdrop\Mix\Manifest;
@@ -38,7 +34,7 @@ class Provider extends ServiceProvider {
 		$this->app->singleton( 'backdrop/mix/manifest', function() {
 
 			$file     = get_parent_theme_file_path( 'public/mix-manifest.json' );
-			$contents = (array) json_decode( file_get_contents( $file ), true );
+			$contents = ( array ) json_decode( file_get_contents( $file ), true );
 
 			if ( is_child_theme() ) {
 				$child = get_stylesheet_directory() . '/public/mix-manifest.json';
@@ -46,7 +42,7 @@ class Provider extends ServiceProvider {
 				if ( file_exists( $child ) ) {
 					$contents = array_merge(
 						$contents,
-						(array) json_decode( file_get_contents( $file ), true )
+						( array ) json_decode( file_get_contents( $file ), true )
 					);
 				}
 			}
