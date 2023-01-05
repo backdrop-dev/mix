@@ -16,7 +16,7 @@
     ],
     "autoload": {
         "psr-4": {
-          "Benlumia007\\Backdrop\\Mix\\Manifest\\": "src/"
+          "Backdrop\\Mix\\Manifest\\": "src/"
 		},
         "files": [
             "src/functions-helpers.php"

@@ -13,8 +13,8 @@
  * @link      https://themehybrid.com/themes/exhale
  */
 
-namespace Benlumia007\Backdrop\Mix\Manifest;
-use Benlumia007\Backdrop\Support\ServiceProvider;
+namespace Backdrop\Mix\Manifest;
+use Backdrop\Core\ServiceProvider;
 
 /**
  * App service provider.

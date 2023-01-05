@@ -1,7 +1,7 @@
 <?php
 
-namespace Benlumia007\Backdrop\Mix\Manifest;
-use Benlumia007\Backdrop\App;
+namespace Backdrop\Mix\Manifest;
+use Backdrop\App;
 
 function asset( $path ) {
 
