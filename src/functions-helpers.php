@@ -41,3 +41,18 @@ function childAsset( $path ) {
 
 	return get_stylesheet_directory_uri() . '/' . 'public' . $path;
 }
+
+function pluginAsset( $path ) {
+
+	// Get the Laravel Mix manifest.
+	$manifest = App::resolve( 'backdrop/mix/manifest/plugin' );
+
+	// Make sure to trim any slashes from the front of the path.
+	$path = '/' . ltrim( $path, '/' );
+
+	if ( $manifest && isset( $manifest[ $path ] ) ) {
+		$path = $manifest[ $path ];
+	}
+
+	return plugin_dir_uri( __FILE__ ) . '/' . 'public' . $path;
+}
