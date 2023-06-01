@@ -24,7 +24,7 @@ function asset( $path ) {
 		$path = $manifest[ $path ];
 	}
 
-	return get_template_directory_uri() . 'public' . $path;
+	return get_template_directory_uri() . '/' . 'public' . $path;
 }
 
 function childAsset( $path ) {
@@ -39,5 +39,5 @@ function childAsset( $path ) {
 		$path = $manifest[ $path ];
 	}
 
-	return get_stylesheet_directory_uri() . 'public' . $path;
+	return get_stylesheet_directory_uri() . '/' . 'public' . $path;
 }
