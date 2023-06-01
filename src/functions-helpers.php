@@ -15,7 +15,7 @@ use Backdrop\App;
 function asset( $path ) {
 
 	// Get the Laravel Mix manifest.
-	$manifest = App::resolve( 'backdrop/mix/manifest' );
+	$manifest = App::resolve( 'backdrop/mix/manifest/parent' );
 
 	// Make sure to trim any slashes from the front of the path.
 	$path = '/' . ltrim( $path, '/' );
@@ -24,5 +24,20 @@ function asset( $path ) {
 		$path = $manifest[ $path ];
 	}
 
-	return get_theme_file_uri( 'public' . $path );
+	return get_template_directory_uri() . 'public' . $path;
+}
+
+function childAsset( $path ) {
+
+	// Get the Laravel Mix manifest.
+	$manifest = App::resolve( 'backdrop/mix/manifest/child' );
+
+	// Make sure to trim any slashes from the front of the path.
+	$path = '/' . ltrim( $path, '/' );
+
+	if ( $manifest && isset( $manifest[ $path ] ) ) {
+		$path = $manifest[ $path ];
+	}
+
+	return get_stylesheet_directory_uri() . 'public' . $path;
 }

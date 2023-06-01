@@ -31,23 +31,19 @@ class Provider extends ServiceProvider {
 	public function register() {
 
 		// Bind the Laravel Mix manifest for cache-busting.
-		$this->app->singleton( 'backdrop/mix/manifest', function() {
+		$this->app->singleton( 'backdrop/mix/manifest/parent', function() {
 
-			$file     = get_parent_theme_file_path( 'public/mix-manifest.json' );
-			$contents = ( array ) json_decode( file_get_contents( $file ), true );
+			$file = get_template_directory() . 'public/mix-manifest.json';
 
-			if ( is_child_theme() ) {
-				$child = get_stylesheet_directory() . '/public/mix-manifest.json';
+			return file_exists( $file ) ? json_decode( file_get_contents( $file ), true ) : null;
+		} );
 
-				if ( file_exists( $child ) ) {
-					$contents = array_merge(
-						$contents,
-						( array ) json_decode( file_get_contents( $file ), true )
-					);
-				}
-			}
+		// Bind the Laravel Mix manifest for cache-busting.
+		$this->app->singleton( 'backdrop/mix/manifest/child', function() {
 
-			return $contents;
+			$file = get_stylesheet_directory() . 'public/mix-manifest.json';
+
+			return file_exists( $file ) ? json_decode( file_get_contents( $file ), true ) : null;
 		} );
 	}
 }
