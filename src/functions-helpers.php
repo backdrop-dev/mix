@@ -15,16 +15,19 @@ use Backdrop\App;
 function asset( $path ) {
 
 	// Get the Laravel Mix manifest.
-	$manifest = App::resolve( 'backdrop/mix/manifest/parent' );
+	$manifest = App::resolve('backdrop/mix/manifest/parent');
 
 	// Make sure to trim any slashes from the front of the path.
-	$path = '/' . ltrim( $path, '/' );
+	$path = '/' . ltrim($path, '/');
 
-	if ( $manifest && isset( $manifest[ $path ] ) ) {
-		$path = $manifest[ $path ];
-	}
+	// Retrieve the path from the manifest, or null if not found.
+	$manifestPath = $manifest[$path] ?? null;
 
-	return get_template_directory_uri() . '/' . 'public' . $path;
+	// Get the parent theme's directory URI.
+	$themeDirectoryUri = get_template_directory_uri();
+
+	// Construct the URL with the desired path from the manifest.
+	return trailingslashit( $themeDirectoryUri ) . 'public' . $manifestPath;
 }
 
 function childAsset( $path ) {
