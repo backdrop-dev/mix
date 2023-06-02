@@ -50,9 +50,8 @@ function pluginAsset( $path ) {
 	// Make sure to trim any slashes from the front of the path.
 	$path = '/' . ltrim( $path, '/' );
 
-	if ( $manifest && isset( $manifest[ $path ] ) ) {
-		$path = $manifest[ $path ];
-	}
+	// Retrieve the path from the manifest, or null if not found.
+	$manifestPath = $manifest[ $path ] ?? null;
 
-	return plugin_dir_uri( __FILE__ ) . '/' . 'public' . $path;
+	return dirname( dirname( dirname( plugin_dir_url( __DIR__ )  )  ) ) . '/public' . $manifestPath;
 }

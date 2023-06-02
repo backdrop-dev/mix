@@ -49,7 +49,7 @@ class Provider extends ServiceProvider {
 		// Bind the Laravel Mix manifest for cache-busting.
 		$this->app->singleton( 'backdrop/mix/manifest/plugin', function() {
 
-			$file = plugin_dir_path( __FILE__ ) . '/' . 'public/mix-manifest.json';
+			$file = dirname( dirname( dirname( dirname( plugin_dir_path( __FILE__ ) ) ) ) ) . '/public/mix-manifest.json';
 
 			return file_exists( $file ) ? json_decode( file_get_contents( $file ), true ) : null;
 		} );
