@@ -14,7 +14,7 @@
     ],
     "autoload": {
         "psr-4": {
-          "Backdrop\\Mix\\Manifest\\": "src/"
+          "Backdrop\\Mix\\": "src/"
 		},
         "files": [
             "src/functions-helpers.php"

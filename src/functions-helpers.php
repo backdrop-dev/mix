@@ -9,13 +9,13 @@
  * @link      https://github.com/benlumia007/backdrop-mix-manifest
  */
 
-namespace Backdrop\Mix\Manifest;
+namespace Backdrop\Mix;
 use Backdrop\App;
 
 function asset( $path ) {
 
 	// Get the Laravel Mix manifest.
-	$manifest = App::resolve('backdrop/mix/manifest/parent');
+	$manifest = App::resolve('backdrop/mix/parent');
 
 	// Make sure to trim any slashes from the front of the path.
 	$path = '/' . ltrim($path, '/');
@@ -33,7 +33,7 @@ function asset( $path ) {
 function childAsset( $path ) {
 
 	// Get the Laravel Mix manifest.
-	$manifest = App::resolve( 'backdrop/mix/manifest/child' );
+	$manifest = App::resolve( 'backdrop/mix/child' );
 
 	// Make sure to trim any slashes from the front of the path.
 	$path = '/' . ltrim( $path, '/' );
@@ -51,7 +51,7 @@ function childAsset( $path ) {
 function pluginAsset( $path ) {
 
 	// Get the Laravel Mix manifest.
-	$manifest = App::resolve( 'backdrop/mix/manifest/plugin' );
+	$manifest = App::resolve( 'backdrop/mix/plugin' );
 
 	// Make sure to trim any slashes from the front of the path.
 	$path = '/' . ltrim( $path, '/' );
