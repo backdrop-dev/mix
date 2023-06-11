@@ -1,10 +1,8 @@
 {
-    "name": "benlumia007/backdrop-mix-manifest",
-    "description": "A core that helps you build amazing themes",
-    "keywords": [
-        "wordpress"
-    ],
-    "homepage": "https://github.com/benlumia007/backdrop-mix-manifest",
+    "name": "backdrop-dev/mix",
+    "description": "Backdrop Mix is a helper class for ClassicPress or WordPress plugins themes and plugins using Laravel Mix.",
+    "keywords": [ "classicpress", "wordpress" ],
+    "homepage": "https://github.com/backdrop-dev/mix",
     "license": "GPL-2.0-or-later",
     "authors": [
         {
