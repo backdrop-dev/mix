@@ -9,7 +9,8 @@
  * @link      https://github.com/benlumia007/backdrop-mix-manifest
  */
 
-namespace Backdrop\Mix\Manifest;
+namespace Backdrop\Mix;
+
 use Backdrop\Core\ServiceProvider;
 
 /**
