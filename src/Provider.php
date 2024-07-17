@@ -29,7 +29,7 @@ class Provider extends ServiceProvider {
 	 * @access public
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 
 		// Bind the Laravel Mix manifest for cache-busting.
 		$this->app->singleton( 'backdrop/mix/parent', function() {
