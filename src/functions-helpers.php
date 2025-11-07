@@ -12,52 +12,69 @@
 namespace Backdrop\Mix;
 use Backdrop\App;
 
-function asset( $path ) {
+/**
+ * Helper to read Vite manifest and resolve final asset path.
+ *
+ * @param array|null $manifest Decoded manifest.json or null.
+ * @param string     $path     Entry key or output path (logical).
+ * @param string     $baseUrl  Base public URL (e.g. parent theme, child theme, plugin)
+ * @return string    Absolute URL to built asset.
+ */
+function resolve_vite_asset( ?array $manifest, string $path, string $baseUrl ): string {
+	// Normalize input (manifest entries always use forward slashes)
+	$key  = ltrim( $path, '/' );        // e.g. "resources/scss/screen.scss"
+	$base = basename( $key );           // e.g. "screen.css"
 
-	// Get the Laravel Mix manifest.
-	$manifest = App::resolve('backdrop/mix/parent');
+	// 1. Exact manifest key match: "resources/scss/screen.scss"
+	if ( isset( $manifest[ $key ]['file'] ) ) {
+		$file = $manifest[ $key ]['file']; // e.g. css/screen-xxxxx.css
 
-	// Make sure to trim any slashes from the front of the path.
-	$path = '/' . ltrim($path, '/');
+	// 2. Match by basename: "screen.css" -> find "css/screen-xxxxx.css"
+	} elseif( is_array( $manifest ) ) {
+		$file = null;
+		foreach ( $manifest as $entry ) {
+			if ( ! empty( $entry['file'] ) && str_ends_with( $entry['file'], $base ) ) {
+				$file = $entry['file'];
+				break;
+			}
+		}
 
-	// Retrieve the path from the manifest, or null if not found.
-	$manifestPath = $manifest[$path] ?? null;
+		// 2b. If not in manifest at all (e.g. dev mode), fall back to logical path
+		if ( ! $file ) {
+			$file = preg_replace( '#^assets/#', '', $key ); // handle assets/css/...
+		}
+	} else {
+		// 3. No manifest at all (likely before build)
+		$file = preg_replace( '#^assets/#', '', $key );
+	}
 
-	// Get the parent theme's directory URI.
-	$themeDirectoryUri = get_template_directory_uri();
-
-	// Construct the URL with the desired path from the manifest.
-	return trailingslashit( $themeDirectoryUri ) . 'public' . $manifestPath;
+	return trailingslashit( $baseUrl ) . 'public/assets/' . ltrim( $file, '/' );
 }
 
-function childAsset( $path ) {
+/**
+ * Parent theme asset loader (Vite).
+ */
+function asset( string $path ): string {
+	$manifest = App::resolve( 'backdrop/mix/parent' );
+	$baseUrl  = get_template_directory_uri();
+	return resolve_vite_asset( $manifest, $path, $baseUrl );
+}
 
-	// Get the Laravel Mix manifest.
+/**
+ * Child theme asset loader (Vite).
+ */
+function childAsset( string $path ): string {
 	$manifest = App::resolve( 'backdrop/mix/child' );
-
-	// Make sure to trim any slashes from the front of the path.
-	$path = '/' . ltrim( $path, '/' );
-
-	// Retrieve the path from the manifest, or null if not found.
-	$manifestPath = $manifest[$path] ?? null;
-
-	// Get the theme's directory URI.
-	$themeDirectoryUri = wp_get_theme()->get_stylesheet_directory_uri();
-
-	// Construct the URL with the desired path from the manifest.
-	return trailingslashit( $themeDirectoryUri ) . 'public' . $manifestPath;
+	$baseUrl  = wp_get_theme()->get_stylesheet_directory_uri();
+	return resolve_vite_asset( $manifest, $path, $baseUrl );
 }
 
-function pluginAsset( $path ) {
-
-	// Get the Laravel Mix manifest.
+/**
+ * Plugin asset loader (Vite).
+ */
+function pluginAsset( string $path ): string {
 	$manifest = App::resolve( 'backdrop/mix/plugin' );
-
-	// Make sure to trim any slashes from the front of the path.
-	$path = '/' . ltrim( $path, '/' );
-
-	// Retrieve the path from the manifest, or null if not found.
-	$manifestPath = $manifest[ $path ] ?? null;
-
-	return dirname( dirname( dirname( plugin_dir_url( __DIR__ )  )  ) ) . '/public' . $manifestPath;
+	// Plugin base URL: go up from this file to plugin root
+	$baseUrl  = dirname( dirname( dirname( plugin_dir_url( __DIR__ ) ) ) );
+	return resolve_vite_asset( $manifest, $path, $baseUrl );
 }

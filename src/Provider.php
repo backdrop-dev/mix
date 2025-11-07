@@ -34,7 +34,7 @@ class Provider extends ServiceProvider {
 		// Bind the Laravel Mix manifest for cache-busting.
 		$this->app->singleton( 'backdrop/mix/parent', function() {
 
-			$file = get_template_directory() . '/' . 'public/mix-manifest.json';
+			$file = get_template_directory() . '/' . 'public/assets/manifest.json';
 
 			return file_exists( $file ) ? json_decode( file_get_contents( $file ), true ) : null;
 		} );
@@ -42,7 +42,7 @@ class Provider extends ServiceProvider {
 		// Bind the Laravel Mix manifest for cache-busting.
 		$this->app->singleton( 'backdrop/mix/child', function() {
 
-			$file = get_stylesheet_directory() . '/' . 'public/mix-manifest.json';
+			$file = get_stylesheet_directory() . '/' . 'public/assets/manifest.json';
 
 			return file_exists( $file ) ? json_decode( file_get_contents( $file ), true ) : null;
 		} );
@@ -50,7 +50,7 @@ class Provider extends ServiceProvider {
 		// Bind the Laravel Mix manifest for cache-busting.
 		$this->app->singleton( 'backdrop/mix/plugin', function() {
 
-			$file = dirname( dirname( dirname( dirname( plugin_dir_path( __FILE__ ) ) ) ) ) . '/public/mix-manifest.json';
+			$file = dirname( dirname( dirname( dirname( plugin_dir_path( __FILE__ ) ) ) ) ) . '/public/assets/manifest.json';
 
 			return file_exists( $file ) ? json_decode( file_get_contents( $file ), true ) : null;
 		} );
